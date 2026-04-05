@@ -55,11 +55,11 @@ containerBtn.addEventListener("click", (e) => {
                 subtextResult.innerHTML = "";
                 prevOperator = "+";
                 prevNumber = 0;
-                currentNumber = result;
+                currentNumber = 0;
             }
             else {
                 textResult.append(currentOperator);
-                subtextResult.textContent = result;    
+                subtextResult.textContent = result;
             }
         }
     }
@@ -84,7 +84,12 @@ containerBtn.addEventListener("click", (e) => {
 
     if(e.target.id === "delete") {
         textResult.textContent = textResult.textContent.replace(/\d+(?:\.\d+)?$/, "");
-        console.log("Hao");
         currentNumber = 0;
+    }
+
+    if(e.target.id === "plus-minus") {
+        if(textResult.textContent === "") {return; }
+        prevNumber = -prevNumber;
+        subtextResult.textContent = -result;
     }
 })
