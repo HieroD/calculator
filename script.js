@@ -22,6 +22,10 @@ function operate() {
             result = prevNumber * currentNumber;
             break;
         case "/" :
+            if (currentNumber == 0) {
+                result = "ERROR";
+                return;
+            }
             result = prevNumber / currentNumber;
             break;
     }
@@ -45,7 +49,8 @@ containerBtn.addEventListener("click", (e) => {
         textResult.append(e.target.textContent );
     }
     if(e.target.className === "operator") {
-        if(textResult.textContent === "") {}
+        if(textResult.textContent === "") {return; }
+        else if (currentNumber == 0 && e.target.textContent != "="){return; }
         else if (textResult.textContent.match(/[-+x/]$/)) {}
         else {
             currentOperator = e.target.textContent;
@@ -89,6 +94,7 @@ containerBtn.addEventListener("click", (e) => {
 
     if(e.target.id === "plus-minus") {
         if(textResult.textContent === "") {return; }
+        if(subtextResult.textContent === "ERROR") {return; }
         prevNumber = -prevNumber;
         subtextResult.textContent = -result;
     }
