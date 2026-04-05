@@ -46,12 +46,16 @@ containerBtn.addEventListener("click", (e) => {
     }
     if(e.target.className === "operator") {
         if(textResult.textContent === "") {}
+        else if (textResult.textContent.match(/[-+x/]$/)) {}
         else {
             currentOperator = e.target.textContent;
             operate();
             if(currentOperator === "=") {
                 textResult.textContent = result;
                 subtextResult.innerHTML = "";
+                prevOperator = "+";
+                prevNumber = 0;
+                currentNumber = result;
             }
             else {
                 textResult.append(currentOperator);
@@ -61,12 +65,12 @@ containerBtn.addEventListener("click", (e) => {
     }
 
     if(e.target.id === "decimal"){
-        if(textResult.textContent === "") {}
-        else if(/\.$/.test(textResult.textContent)) {}
-        else {
-            currentNumber = currentNumber + "."
-            textResult.append(".");
-        }
+        if(textResult.textContent === "") { return; } 
+        
+        if(String(currentNumber).includes(".")) { return; } 
+        
+        currentNumber = currentNumber + ".";
+        textResult.append(".");
     }
 
     if(e.target.id === "clear") {
@@ -77,11 +81,10 @@ containerBtn.addEventListener("click", (e) => {
         currentNumber = 0;
         prevNumber = 0;
     }
+
     if(e.target.id === "delete") {
-        textResult.innerHTML = "";
-        prevOperator = "+";
-        result= 0;
+        textResult.textContent = textResult.textContent.replace(/\d+(?:\.\d+)?$/, "");
+        console.log("Hao");
         currentNumber = 0;
-        prevNumber = 0;
     }
 })
